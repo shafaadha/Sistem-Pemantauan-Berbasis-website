@@ -1,0 +1,45 @@
+.notification-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-width: 300px;
+}
+
+.notification {
+    background-color: #ff0000;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative; /* Tambahkan posisi relatif untuk penutup absolut */
+}
+
+.notification-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.notification-close-btn i {
+    font-size: 16px;
+    color: #888;
+}
+
+.notification-close-btn i:hover {
+    color: #333;
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+}
+.notification-title {
+    flex: 1;
+}
+
+.notification-close-btn {
+    margin-right: 5px;
+    cursor: pointer;
+}

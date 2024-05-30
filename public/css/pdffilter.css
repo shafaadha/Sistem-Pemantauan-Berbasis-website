@@ -1,0 +1,49 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .form-popup {
+    display: none;
+    position: fixed;
+    bottom: 100px; 
+    right: 28px;
+    border: 2px solid #f1f1f1;
+    z-index: 9;
+    background-color: white;
+    padding: 7px;
+    width: 200px; 
+  }
+  
+
+  .form-container {
+    max-width: 100%;
+  }
+
+  .form-container input[type=date],
+  .form-container input[type=start_date] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-container .btn {
+    background-color: #045faa;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: calc(100% - 20px); 
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  

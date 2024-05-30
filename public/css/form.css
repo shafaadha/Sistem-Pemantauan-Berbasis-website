@@ -1,0 +1,23 @@
+.form {
+    width: 600px;
+    background-color:transparent;
+    overflow: hidden;
+}
+
+.col1,
+.col2 {
+    width: 48%; /* Sesuaikan lebar kolom sesuai kebutuhan */
+    float: left;
+    margin-bottom: 3px; /* Tambahkan margin bawah agar tidak saling berhimpitan */
+    padding: 20px;
+}
+
+.col1 {
+    margin-right: 1%; /* Tambahkan margin kanan pada kolom pertama */
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
