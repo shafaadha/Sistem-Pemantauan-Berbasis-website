@@ -133,142 +133,222 @@ class ValidasiController extends Controller
         }
     }
 
-    public function processOut(Request $request)
-    {
+    // public function processOut(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'code' => 'required',
+    //         'plat_keluar' => 'nullable',
+    //         'gambar_out' => 'image|nullable|file|max:1024',
+    //     ]); 
+
+        
+    //     $cekplat = Scanplat::where('plat_masuk', $validatedData['plat_keluar'])->first();
+
+    //     $ceklog = AccessLog::where('date', Carbon::today())
+    //                         ->where('code', $validatedData['code'])
+    //                         ->latest('time_masuk')
+    //                         ->first();
+
+    //     $accessLogId = $ceklog->id;
+
+    //     $cekscanplat = Scanplat::where('date', Carbon::today())
+    //                             ->where('plat_masuk', $validatedData['plat_keluar'])
+    //                             ->latest('tcek_masuk')
+    //                             ->first();
+
+    //     $kategori = $ceklog->qrcode->kategori;
+
+
+    //     $date = Carbon::now();     
+    //     if ($accessLogId === null ){
+    //         return response()->json(['status'=>'Fail']);
+    //     } 
+
+    //     //cek log apakah code ada didatabase
+    //     if ($ceklog) {
+    //         $ceklog->time_keluar = Carbon::now()->toTimeString();
+    //         $time_masuk = Carbon::parse($ceklog->time_masuk);
+    //         $ceklog->status_out = 'Valid QR';
+    //         $ceklog->waktu = $time_masuk->diffInMinutes($ceklog->time_keluar);
+    //         $ceklog->save();
+    //         $biaya = self::processPayment($accessLogId);
+
+            
+    //         //jika pengguna
+    //         if ($kategori === 'pengguna') 
+    //         {
+    //             if ($cekplat) {
+    //                 //jika plat keluar ada didatabase scan plat dan data di scanplat sama dengan plat yang dikirim
+    //                 if ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id == $ceklog->id)
+    //                     {
+    //                         $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
+    //                         $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $cekscanplat->plat_masuk);
+    //                         $cekscanplat->tcek_keluar = Carbon::now()->toTimeString();
+    //                         $cekscanplat->similarity_keluar = $checkStringSimilarity;
+    //                         $cekscanplat->plat_keluar = $validatedData['plat_keluar'];
+    //                         $cekscanplat->gambar_out = $gambarout;
+    //                         $cekscanplat->status_out = 'Plat yang masuk dan keluar sama';
+    //                         $cekscanplat->save();   
+    //                         $datasend = [
+    //                             'no_plat' =>$cekscanplat->plat_keluar,
+    //                             'time'=>$cekscanplat->tcek_keluar,
+    //                             'message' => $cekscanplat->peristiwa->qrcode->pengguna->name, 'baru saja mas'
+    //                         ];
+    //                         event(new GateNotification($datasend));                    
+    //                         return response()->json(['status' => 'success', 'message' => 'QR dan Plat yang masuk dan keluar sama']); 
+    //                         return redirect('/dashboard/valid')->with('success', 'Valid Plat dan QR');
+    //                     }                
+    
+    //                 //jika plat yang masuk dan code ada namun berbeda pengguna
+    //                 elseif ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id != $cekplat->id) 
+    //                 {
+    //                     $accessLogId = $ceklog->id;
+    //                     $scanplatToUpdate = Scanplat::where('log_id', $accessLogId)->latest('time_masuk')->first();
+    //                     if ($scanplatToUpdate){
+    //                         $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
+    //                         $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $scanplatToUpdate->plat_masuk);
+    //                         $scanplatToUpdate->tcek_keluar  = Carbon::now()->toTimeString();
+    //                         $scanplatToUpdate->plat_keluar = $validatedData['plat_keluar'];
+    //                         $scanplatToUpdate->gambar_out = $gambarout;
+    //                         $scanplatToUpdate->status_out = 'Plat yang masuk dan keluar berbeda';
+    //                         $scanplatToUpdate->similarity_keluar = $checkStringSimilarity;
+    //                         $scanplatToUpdate->save();
+    //                         $datasend = [
+    //                             'no_plat' =>$cekscanplat->plat_keluar,
+    //                             'time'=>$cekscanplat->tcek_keluar,
+    //                             'message' => $cekscanplat->peristiwa->qrcode->pengguna->name, 'baru saja masuk'
+    //                         ];
+    //                         event(new GateNotification($datasend));
+    //                         return response()->json(['status' => 'success', 'message' => 'QR valid tapi berbeda kendaraan']); 
+
+    //                         return redirect('/dashboard/valid')->with('success', 'Valid QR tapi berbeda kendaraan ');
+    //                     }
+    //                 }
+    //             }
+
+    //             elseif ($cekplat == null){
+    //                 $accessLogId = $ceklog->id;                   
+    //                 $scanplatToUpdate = Scanplat::where('log_id', $accessLogId)->latest('tcek_masuk')->first();;
+
+    //                 if ($scanplatToUpdate) {
+    //                     $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
+    //                     $scanplatToUpdate->tcek_keluar  = Carbon::now()->toTimeString();
+    //                     $scanplatToUpdate->plat_keluar = $validatedData['plat_keluar'];
+    //                     $scanplatToUpdate->gambar_out = $gambarout;
+    //                     $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $scanplatToUpdate->plat_masuk);      
+    //                     $scanplatToUpdate->status_out = 'Plat yang masuk dan keluar berbeda';
+    //                     $scanplatToUpdate->similarity_keluar = $checkStringSimilarity;
+    //                     $scanplatToUpdate->save();
+    //                     $datasend = [
+    //                         'no_plat' =>$scanplatToUpdate->plat_keluar,
+    //                         'time'=>$scanplatToUpdate->tcek_keluar,
+    //                         'message' => $scanplatToUpdate->peristiwa->qrcode->pengguna->name, 'baru saja mas'
+    //                     ];
+    //                     event(new GateNotification($datasend));  
+    //                     return response()->json(['status' => 'success', 'message' => 'Plat berbeda masuk dan keluar']);
+    //                 }
+    //             }
+    //         }
+
+    //         elseif ($kategori === 'tamu') {
+
+    //             $ceklog->time_keluar  = Carbon::now()->toTimeString();
+    //             $time_masuk = Carbon::parse($ceklog->time_masuk);
+    //             $ceklog->waktu = $time_masuk->diffInMinutes($ceklog->time_keluar);
+    //             $ceklog->plat_masuk = 'XXXXX';
+    //             $ceklog->save();
+
+    //             return response()->json(['status' => 'success', 'message' => 'Harap mengembalikan QR']); 
+    //             return redirect('/dashboard/riwayat')->with('success', 'Harap mengembalikan QR');
+
+    //         }
+    //     }
+    //      //jika tidak ada qr yang terdaftar
+    //     elseif($ceklog == null){
+    //         return response()->json(['status' => 'fail', 'message' => 'Tidak bisa keluar']); 
+    //         return redirect('/dashboard/valid')->with('success', 'tidak bisa keluar karena akses sebelumnya belum keluar');
+    //     }
+    // }
+
+    public function processOut(Request $request){
         $validatedData = $request->validate([
             'code' => 'required',
             'plat_keluar' => 'nullable',
-            'gambar_out' => 'image|nullable|file|max:1024',
-        ]); 
-
+            'gambar_out' => 'image|null|file|max: 1024'
+        ]);
+        $date =Carbon::now();
         
-        $cekplat = Scanplat::where('plat_masuk', $validatedData['plat_keluar'])->first();
-
         $ceklog = AccessLog::where('date', Carbon::today())
                             ->where('code', $validatedData['code'])
                             ->latest('time_masuk')
                             ->first();
 
-        $accessLogId = $ceklog->id;
+        if (!$ceklog) {
+            return response()->json(['status' => 'fail', 'message'=> 'QR tidak ditemukan']);
 
+        }
+
+        $cekplat = Scanplat::where('plat_masuk', $validatedData['plat_keluar'])->first();
         $cekscanplat = Scanplat::where('date', Carbon::today())
                                 ->where('plat_masuk', $validatedData['plat_keluar'])
                                 ->latest('tcek_masuk')
                                 ->first();
 
         $kategori = $ceklog->qrcode->kategori;
+        $ceklog->time_keluar = Carbon::now()->toTimeString();
+        $ceklog->status_out = 'Valid QR';
+        $ceklog->waktu = Carbon::parse($ceklog->time_masuk)->diffInMinutes($ceklog->time_keluar);
+        $ceklog->save();
 
+        $biaya = self::processPayment($ceklog->id);
+        
+        if($kategori == 'pengguna'){
+            $gambarout = $validatedData['gambar_out'] ? $request->file('gambar_out')->store('plat-images') : null;
 
-        $date = Carbon::now();     
-        if ($accessLogId === null ){
-            return response()->json(['status'=>'Fail']);
-        } 
-
-        //cek log apakah code ada didatabase
-        if ($ceklog) {
-            $ceklog->time_keluar = Carbon::now()->toTimeString();
-            $time_masuk = Carbon::parse($ceklog->time_masuk);
-            $ceklog->status_out = 'Valid QR';
-            $ceklog->waktu = $time_masuk->diffInMinutes($ceklog->time_keluar);
+            if ($cekplat) {
+                if ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id == $ceklog->id) {
+                    $this->updateScanPlat($cekscanplat, $validatedData['plat_keluar'], $gambarout, 'Plat yang masuk dan keluar sama');
+                    return $this->sendResponse($cekscanplat, 'QR dan Plat yang masuk dan keluar sama', 'Valid Plat dan QR');
+                } elseif ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id != $ceklog->id) {
+                    $this->updateScanPlat($cekscanplat, $validatedData['plat_keluar'], $gambarout, 'Plat yang masuk dan keluar berbeda');
+                    return $this->sendResponse($cekscanplat, 'QR valid tapi berbeda kendaraan', 'Valid QR tapi berbeda kendaraan');
+                }
+            } else {
+                $this->updateScanPlat($cekscanplat, $validatedData['plat_keluar'], $gambarout, 'Plat yang masuk dan keluar berbeda');
+                return $this->sendResponse($cekscanplat, 'Plat berbeda masuk dan keluar', 'Plat berbeda masuk dan keluar');
+            }
+        } elseif ($kategori === 'tamu') {
+            $ceklog->plat_masuk = 'XXXXX';
             $ceklog->save();
-            $biaya = self::processPayment($accessLogId);
-
-            
-            //jika pengguna
-            if ($kategori === 'pengguna') 
-            {
-                if ($cekplat) {
-                    //jika plat keluar ada didatabase scan plat dan data di scanplat sama dengan plat yang dikirim
-                    if ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id == $ceklog->id)
-                        {
-                            $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
-                            $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $cekscanplat->plat_masuk);
-                            $cekscanplat->tcek_keluar = Carbon::now()->toTimeString();
-                            $cekscanplat->similarity_keluar = $checkStringSimilarity;
-                            $cekscanplat->plat_keluar = $validatedData['plat_keluar'];
-                            $cekscanplat->gambar_out = $gambarout;
-                            $cekscanplat->status_out = 'Plat yang masuk dan keluar sama';
-                            $cekscanplat->save();   
-                            $datasend = [
-                                'no_plat' =>$cekscanplat->plat_keluar,
-                                'time'=>$cekscanplat->tcek_keluar,
-                                'message' => $cekscanplat->peristiwa->qrcode->pengguna->name, 'baru saja mas'
-                            ];
-                            event(new GateNotification($datasend));                    
-                            return response()->json(['status' => 'success', 'message' => 'QR dan Plat yang masuk dan keluar sama']); 
-                            return redirect('/dashboard/valid')->with('success', 'Valid Plat dan QR');
-                        }                
-    
-                    //jika plat yang masuk dan code ada namun berbeda pengguna
-                    elseif ($cekscanplat && $cekscanplat->peristiwa->exists() && $cekscanplat->peristiwa->id != $cekplat->id) 
-                    {
-                        $accessLogId = $ceklog->id;
-                        $scanplatToUpdate = Scanplat::where('log_id', $accessLogId)->latest('time_masuk')->first();
-                        if ($scanplatToUpdate){
-                            $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
-                            $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $scanplatToUpdate->plat_masuk);
-                            $scanplatToUpdate->tcek_keluar  = Carbon::now()->toTimeString();
-                            $scanplatToUpdate->plat_keluar = $validatedData['plat_keluar'];
-                            $scanplatToUpdate->gambar_out = $gambarout;
-                            $scanplatToUpdate->status_out = 'Plat yang masuk dan keluar berbeda';
-                            $scanplatToUpdate->similarity_keluar = $checkStringSimilarity;
-                            $scanplatToUpdate->save();
-                            $datasend = [
-                                'no_plat' =>$cekscanplat->plat_keluar,
-                                'time'=>$cekscanplat->tcek_keluar,
-                                'message' => $cekscanplat->peristiwa->qrcode->pengguna->name, 'baru saja masuk'
-                            ];
-                            event(new GateNotification($datasend));
-                            return response()->json(['status' => 'success', 'message' => 'QR valid tapi berbeda kendaraan']); 
-
-                            return redirect('/dashboard/valid')->with('success', 'Valid QR tapi berbeda kendaraan ');
-                        }
-                    }
-                }
-
-                elseif ($cekplat == null){
-                    $accessLogId = $ceklog->id;                   
-                    $scanplatToUpdate = Scanplat::where('log_id', $accessLogId)->latest('tcek_masuk')->first();;
-
-                    if ($scanplatToUpdate) {
-                        $gambarout = $validatedData['gambar_out'] = $request->file('gambar_out')->store('plat-images');
-                        $scanplatToUpdate->tcek_keluar  = Carbon::now()->toTimeString();
-                        $scanplatToUpdate->plat_keluar = $validatedData['plat_keluar'];
-                        $scanplatToUpdate->gambar_out = $gambarout;
-                        $checkStringSimilarity = self::checkStringSimilarity($validatedData['plat_keluar'], $scanplatToUpdate->plat_masuk);      
-                        $scanplatToUpdate->status_out = 'Plat yang masuk dan keluar berbeda';
-                        $scanplatToUpdate->similarity_keluar = $checkStringSimilarity;
-                        $scanplatToUpdate->save();
-                        $datasend = [
-                            'no_plat' =>$scanplatToUpdate->plat_keluar,
-                            'time'=>$scanplatToUpdate->tcek_keluar,
-                            'message' => $scanplatToUpdate->peristiwa->qrcode->pengguna->name, 'baru saja mas'
-                        ];
-                        event(new GateNotification($datasend));  
-                        return response()->json(['status' => 'success', 'message' => 'Plat berbeda masuk dan keluar']);
-                    }
-                }
-            }
-
-            elseif ($kategori === 'tamu') {
-
-                $ceklog->time_keluar  = Carbon::now()->toTimeString();
-                $time_masuk = Carbon::parse($ceklog->time_masuk);
-                $ceklog->waktu = $time_masuk->diffInMinutes($ceklog->time_keluar);
-                $ceklog->plat_masuk = 'XXXXX';
-                $ceklog->save();
-
-                return response()->json(['status' => 'success', 'message' => 'Harap mengembalikan QR']); 
-                return redirect('/dashboard/riwayat')->with('success', 'Harap mengembalikan QR');
-
-            }
+            return response()->json(['status' => 'success', 'message' => 'Harap mengembalikan QR']);
         }
-         //jika tidak ada qr yang terdaftar
-        elseif($ceklog == null){
-            return response()->json(['status' => 'fail', 'message' => 'Tidak bisa keluar']); 
-            return redirect('/dashboard/valid')->with('success', 'tidak bisa keluar karena akses sebelumnya belum keluar');
-        }
+  
     }
+
+    private function updateScanPlat($scanplat, $plat_keluar, $gambarout, $status_out){
+
+        $checkStringSimilarity = self::checkStringSimilarity($plat_keluar, $scanplat->plat_masuk);
+        $scanplat->tcek_keluar = Carbon::now()->toTimeString();
+        $scanplat->similarity_keluar = $checkStringSimilarity;
+        $scanplat->plat_keluar = $plat_keluar;
+        $scanplat->gambar_out = $gambarout;
+        $scanplat->status_out = $status_out;
+        $scanplat->save();
+        
+    }
+
+    private function sendResponse($scanplat, $jsonMessage, $redirectMessage){
+        $datasend = [
+            'no_plat' => $scanplat->plat_keluar,
+            'time' => $scanplat->tcek_keluar,
+            'message' => $scanplat->peristiwa->qrcode->pengguna->name . ' baru saja mas'
+        ];
+        event(new GateNotification($datasend));
+        return response()->json(['status' => 'success', 'message' => $jsonMessage])
+               ->header('Location', url('/dashboard/valid'))
+               ->with('success', $redirectMessage); 
+    }
+
 
 
     public function showForm()
@@ -280,7 +360,7 @@ class ValidasiController extends Controller
     public function laporan()
     {
         $prefix = Auth::user()->role === 'admin' ? 'admin.' : 'manajemen.';
-        $scanplat = Scanplat::orderBy('date', 'desc')->orderBy('tcek_masuk', 'desc')->paginate(14);
+        $scanplat = Scanplat::orderBy('date', 'desc')->orderBy('tcek_masuk', 'desc')->paginate(12);
 
         return view($prefix. 'inout.laporan', compact('scanplat'));
     }
@@ -320,7 +400,7 @@ class ValidasiController extends Controller
         }
     
         // Ambil data yang cocok dengan kueri
-        $scanplat = $riwayat->paginate(14);
+        $scanplat = $riwayat->paginate(11);
     
         // Kembalikan data ke tampilan
         $prefix = Auth::user()->role === 'admin' ? 'admin.' : 'manajemen.';

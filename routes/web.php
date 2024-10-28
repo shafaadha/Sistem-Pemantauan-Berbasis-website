@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\WEB\AdminController;
 use App\Http\Controllers\WEB\BiayaParkirController;
 use App\Http\Controllers\WEB\ConfigHargaController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +45,7 @@ Route::prefix('manajemen')->middleware(['auth', 'check.role:manajemen'])->group(
     Route::get('/pembayaran', [BiayaParkirController::class,'index'])->name('manajemen.pembayaran');
     Route::get('/pembayaran/now', [BiayaParkirController::class,'paymentsNow'])->name('manajemen.pembayaran.now');;
     Route::get('/harga', [ConfigHargaController::class, 'form'])->name('manajemen.updateharga');
+    Route::resource('/admin', AdminController::class);
     
 });
 Route::get('/get-chart-data', [DashboardController::class, 'getChartData'])->name('getChartData');

@@ -41,8 +41,8 @@
 </div>
 
 <div class="row">
-    <div class="table-responsive col-lg-11 mb-1">
-        <table class="table table-striped table-sm">
+    <div class="table-responsive">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">No</th>

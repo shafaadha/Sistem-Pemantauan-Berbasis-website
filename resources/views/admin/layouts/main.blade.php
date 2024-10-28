@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/sidebar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/gate-notification.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alert.css') }}">
 

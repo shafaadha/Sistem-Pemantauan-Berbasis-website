@@ -38,10 +38,9 @@
     @auth
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      <strong>{{ auth()->user()->name }}</strong>
+      <strong>{{ auth()->user()->role }}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-light text-small shadow">
-        <li><a class="dropdown-item">Halo, {{ auth()->user()->role }}</a></li>
         <li>
           <form action="/logout" method="post">
             @csrf

@@ -26,6 +26,7 @@ class ConfigHargaController extends Controller
             'harga_per_jam' => 'nullable|numeric', 
             'harga_menit_pertama' => 'nullable|numeric', 
             'harga_per_menit' => 'nullable|numeric', 
+            'harga_max' => 'nullable|numeric', 
         ]);
     
         $parkirConfig = ConfigHarga::findOrFail(1);
@@ -36,6 +37,7 @@ class ConfigHargaController extends Controller
             'harga_per_jam', 
             'harga_menit_pertama',
             'harga_per_menit',
+            'harga_max',
         ]);
     
         // Filter out the null or empty values from the request
@@ -44,6 +46,7 @@ class ConfigHargaController extends Controller
             'harga_per_jam', 
             'harga_menit_pertama', 
             'harga_per_menit', 
+            'harga_max', 
         ]));
     
         // Merge the current values with the non-empty request data
@@ -56,7 +59,7 @@ class ConfigHargaController extends Controller
         if ($parkirConfig->wasChanged()) {
             return redirect()->route($prefix. 'updateharga')->with('success', 'Harga telah diperbarui');
         } else {
-            return redirect()->route($prefix. 'updateharga')->with('info', 'Tidak ada perubahan yang diperlukan');
+            return redirect()->route($prefix. 'updateharga')->with('info', 'Tidak ada perubahan harga');
         }
     }
     

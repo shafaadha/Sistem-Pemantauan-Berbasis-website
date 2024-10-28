@@ -26,12 +26,6 @@
         </a>
       </li>
       
-      {{-- <li class="nav-item">
-        <a href="/manajemen/valid" class="nav-link link-body-emphasis {{ Request::is('manajemen/valid') ? 'active' : '' }}">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#history"/></svg>
-          Validasi
-        </a>
-      </li> --}}
       
       <li class="nav-item">
         <a href="/manajemen/harga" class="nav-link link-body-emphasis {{ Request::is('manajemen/harga') ? 'active' : '' }}">
@@ -44,13 +38,19 @@
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#wallet"/></svg>
           Pembayaran
         </a>
+        <li class="nav-item">
+          <a href="/manajemen/admin" class="nav-link link-body-emphasis {{ Request::is('manajemen/admin') ? 'active' : '' }}">
+            <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#history"/></svg>
+            Admin
+          </a>
+        </li>
       </li>
     </ul>
     <hr>
     @auth
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-      <strong>{{ auth()->user()->name }}</strong>
+        <strong>{{ auth()->user()->name }}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-light text-small shadow">
         <li>

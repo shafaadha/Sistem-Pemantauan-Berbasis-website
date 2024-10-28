@@ -40,8 +40,6 @@ class AccessController extends Controller
                 $validatedData['gambar_in'] = $request->file('gambar_in')->store('plat-images');
                 $validasiqr = AccessLog::create([
                     'q_r_id' => $cekcode->id,
-                    'code' => $validatedData['code_masuk'],
-                    'no_plat'=>$cekcode->no_plat,
                     'date' => $date->toDateString(),
                     'time_masuk' => $date->toTimeString(),
                     'status_in' => 'Valid QR Code'
@@ -56,7 +54,6 @@ class AccessController extends Controller
                         
                         $scanplat = Scanplat::create([
                             'log_id' => $validasiqr->id,
-                            'no_plat' => $validasiqr->no_plat,
                             'plat_masuk' => $validatedData['plat_masuk'],
                             'similarity_masuk'=> self::checkStringSimilarity($validatedData['plat_masuk'], $validasiqr->no_plat),
                             'gambar_in' => $validatedData['gambar_in'],
@@ -186,13 +183,7 @@ class AccessController extends Controller
                             $cekscanplat->plat_keluar = $validatedData['plat_keluar'];
                             $cekscanplat->gambar_out = $gambarout;
                             $cekscanplat->status_out = 'Plat yang masuk dan keluar sama';
-                            $cekscanplat->save();   
-                            // $datasend = [
-                            //     'no_plat' =>$cekscanplat->plat_keluar,
-                            //     'time'=>$cekscanplat->tcek_keluar,
-                            //     'message' => $cekscanplat->peristiwa->qrcode->pengguna->name, 'baru saja mas'
-                            // ];
-                            // event(new GateNotification($datasend));                    
+                            $cekscanplat->save();                 
                             return response()->json(['status' => 'success', 'message' => 'QR dan Plat yang masuk dan keluar sama']); 
                             return redirect('/dashboard/valid')->with('success', 'Valid Plat dan QR');
                         }                
@@ -313,6 +304,9 @@ class AccessController extends Controller
             // Jika durasi melebihi 1 jam, tambahkan harga untuk jam-jam tambah
             if ($duration > 1) {
                 $price += ($duration - 1) * $parkirConfig->harga_per_jam;
+            }
+            if ($duration > 12){
+                $price = $parkirConfig->harga_max;
             }
     
             $existingPayment = Biaya::where('log_id', $accessLogId)->first();

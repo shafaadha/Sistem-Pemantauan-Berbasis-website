@@ -9,6 +9,6 @@ class ConfigHarga extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $fillable = ['harga_jam_pertama','harga_per_jam'];
+    protected $fillable = ['harga_jam_pertama','harga_per_jam', 'harga_max'];
     
 }

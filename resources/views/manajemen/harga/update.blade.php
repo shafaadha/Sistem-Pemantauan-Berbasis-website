@@ -33,6 +33,11 @@
                     <label for="harga_per_jam" class="form-label">Harga per jam:</label>
                     <input type="number" name="harga_per_jam" class="form-control" value="{{ old('harga_per_jam') }}">
                 </div>
+
+                <div class="mb-3">
+                    <label for="harga_max" class="form-label">Harga maksimal:</label>
+                    <input type="number" name="harga_max" class="form-control" value="{{ old('harga_max') }}">
+                </div>
                 <button type="submit" class="btn btn-primary" onclick="return confirm('Apakah anda yakin mengubah data?')">Simpan</button>
             </form>
         </div>
@@ -42,6 +47,7 @@
                     <tr>
                         <td>Harga Jam Pertama</td>
                         <td>Harga per jam</td>            
+                        <td>Harga maksimal</td>            
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +55,7 @@
                     <tr>
                         <td>{{ $tarif->harga_jam_pertama }}</td>
                         <td>{{ $tarif->harga_per_jam }}</td>
+                        <td>{{ $tarif->harga_max }}</td>
                     </tr>
                     @endforeach
                 </tbody>

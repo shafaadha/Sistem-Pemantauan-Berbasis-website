@@ -66,5 +66,6 @@ class BiayaParkirController extends Controller
         $prefix = Auth::user()->role === 'admin' ? 'admin.' : 'manajemen.';
         return view($prefix. 'pembayaran.index', ['payments' => $paymentNow]);
     }
+
     
 }

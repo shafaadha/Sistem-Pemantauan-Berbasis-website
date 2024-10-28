@@ -70,11 +70,11 @@
             </thead>
             <tbody>
                 @foreach ($scanplat as $plats)
-                <tr class="{{ $plats->plat_masuk !== $plats->plat_keluar ? 'table-danger' : '' }}">
+                <tr>
                     <td>{{ $scanplat->firstItem() + $loop->index }}</td>
                     <td>{{ $plats->peristiwa->qrcode->pengguna->name }}</td>
-                    <td>{{ $plats->peristiwa->code }}</td>
-                    <td>{{ $plats->no_plat }}</td>
+                    <td>{{ $plats->peristiwa->qrcode->code }}</td>
+                    <td>{{ $plats->peristiwa->qrcode->no_plat }}</td>
                     <td>{{ $plats->plat_masuk }}</td>
                     <td>{{ $plats->plat_keluar }}</td>
                     <td>{{ $plats->date }}</td>

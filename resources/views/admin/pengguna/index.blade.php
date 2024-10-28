@@ -61,7 +61,7 @@
         </tbody>
     </table>
 </div>
-<div class="pagination-container" style="position: relative">
+<div class="d-flex justify-content-center">
     <div class="pagination-links">
         {{ $penggunas->links() }}
     </div>
