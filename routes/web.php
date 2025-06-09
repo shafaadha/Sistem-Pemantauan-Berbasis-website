@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrinterThermalController;
 use App\Http\Controllers\WEB\AdminController;
 use App\Http\Controllers\WEB\BiayaParkirController;
 use App\Http\Controllers\WEB\ConfigHargaController;
@@ -92,4 +93,8 @@ Route::get('/toggle-door', [DashboardController::class, 'toggleDoorStatus'])->na
 Route::get('/pusher', function(){
     return view('pusher');
 });
+
+Route::get('/print-view', [PrinterThermalController::class, 'index'])->name('print.view');
+
+Route::get('/print-struk', [PrinterThermalController::class, 'print'])->name('print.struk');
 
